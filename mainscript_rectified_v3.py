@@ -1,3 +1,21 @@
+"""
+Main training script for an E(3)-equivariant delta-learning model (Vref).
+
+This script trains an e3nn-based message passing network to predict ΔV = Vref − V0
+(or Δlog|V| in log-target mode) on cached molecular dimer graphs built with
+PyTorch Geometric. It supports:
+- Loading a precomputed cache of graphs (+ metadata consistency checks)
+- Optional data augmentation (random rotations + coordinate jitter)
+- Mixed precision training (AMP), early stopping, and checkpointing
+- Multiple loss functions (selected via CLI) with negative-Vref penalties
+- Reporting metrics on Vref (MAE, logMAE, relative MAE with floor) and exporting
+  prediction CSVs for train/val/test splits.
+
+Outputs:
+- outputs/plots/<run_id>/  (plots + CSV predictions)
+- outputs/models/<run_id>/ (best checkpoint + final state)
+"""
+
 from __future__ import annotations
 
 import math
