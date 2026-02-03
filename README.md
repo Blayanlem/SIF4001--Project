@@ -67,7 +67,7 @@ python mainscript_rectified_v3.py --root-dir /path/to/data/molecule --output-dir
 ```
 Training creates per-run subfolders for plots and model checkpoints and performs evaluation using the best saved checkpoint when available.
 
-### HPC (SLURM)
+### 3) HPC (SLURM)
 ```bash
 sbatch run3.sh
 ```
