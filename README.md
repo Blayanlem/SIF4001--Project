@@ -61,7 +61,7 @@ Your dataset root directory should contain:
 ```bash
 python preprocess_and_cache_HPC1.py /path/to/data/molecule/
 ```
-This writes a cache like \texttt{cached\_graphs.pt} (or whatever you set) containing \texttt{\{graphs, metadata\}}.
+This writes a cache like `cached_graphs.pt` (or whatever you set) containing `graphs`, `metadata`.
 
 ### 2) Train
 ```bash
