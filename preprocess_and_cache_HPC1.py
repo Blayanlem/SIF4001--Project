@@ -1,3 +1,21 @@
+"""
+Preprocessing + caching pipeline for molecular dimer graphs (PyTorch Geometric).
+
+Reads dimer samples from a dataset directory containing:
+- meta.xlsx describing pairs (molecule IDs), NPZ feature files, geometry (R, θ),
+  baseline V0, and target Vref.
+- {id}.pdb files for atomic coordinates
+- .npz files containing per-atom Mulliken features, dipole, quadrupole, and PR
+
+For each row in meta.xlsx, builds a PyG Data graph with:
+- Atom nodes (Z, positions in internal units, Mulliken node attributes)
+- A "field node" carrying global dipole/quadrupole-derived features
+- radius_graph edges within an internal cutoff and precomputed spherical harmonics
+- Scalar global features u = [R_internal, θ(rad), V0, participation_ratio]
+- Target y = ΔV (= Vref − V0) and y_true_vref for reporting
+
+Saves a single torch file: {"graphs": list[Data], "metadata": {...}} to speed up training.
+"""
 
 from __future__ import annotations
 
