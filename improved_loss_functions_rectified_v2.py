@@ -1,3 +1,24 @@
+"""
+Loss functions for delta-learning the dimer coupling magnitude.
+
+This module provides multiple training losses for predicting ΔV (or Δlog|V|)
+given a baseline V0 and an inter-molecular distance feature R_internal.
+Losses are "log-target aware": if use_log_target=True (or enabled via env var),
+pred/target deltas are treated as Δlog(|V|+eps) and Vref is reconstructed via
+log(|V0|+eps) + Δlog before computing errors in linear Vref space.
+
+Key features:
+- Distance-based weighting: samples can be up-weighted by R_internal/cutoff.
+- Relative-error terms (log1p or percent-style) to handle scale variation.
+- Smooth penalty terms that discourage negative predicted Vref (unphysical).
+- Multiple variants (step penalty, Huber+penalty, curriculum/adaptive, etc.)
+
+Environment:
+- USE_LOG_TARGET / LOG_TARGET can enable log-target behavior if caller does not
+  pass use_log_target explicitly.
+"""
+
+
 import os
 import torch
 import torch.nn.functional as F
